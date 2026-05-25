@@ -51,7 +51,8 @@ def create_admin_user():
     print("💾 Сохранение в базу данных...")
     
     try:
-        with DatabasePool.get_connection() as conn:
+        db_pool = DatabasePool()
+        with db_pool.get_connection() as conn:
             with conn.cursor() as cur:
                 # Проверка существования логина
                 cur.execute("SELECT user_id FROM fish_store.users WHERE login = %s", (login,))
