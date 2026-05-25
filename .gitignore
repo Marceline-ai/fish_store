@@ -1,1 +1,42 @@
-Nothing should be ignored based on the provided file changes, as only a Python source file (`fishstore/dal/database.py`) was modified and no build artifacts, dependencies, or temporary files were detected in the changes.
+# Compiled and build artifacts
+*.pyc
+__pycache__/
+
+# Dependencies
+.venv/
+venv/
+pip-log.txt
+.tox/
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+
+# Environment
+.env
+.env.local
+*.env.*
+
+# Editors
+.vscode/
+.idea/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Coverage reports
+.coverage
+htmlcov/
+coverage/
+
+# Python specific
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg-info/
+.Python
+.pytest_cache/
+.mypy_cache/
