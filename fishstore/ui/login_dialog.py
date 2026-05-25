@@ -8,8 +8,6 @@ from PyQt5.QtWidgets import (QDialog, QVBoxLayout, QHBoxLayout, QLabel,
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
 
-import bcrypt
-
 from dal.database import DatabasePool
 from dal.repositories import UserRepository
 from core.validators import validate_login
@@ -124,9 +122,8 @@ class LoginDialog(QDialog):
                 )
                 return
             
-            # Verify password hash
-            password_hash = user['password_hash']
-            if not bcrypt.checkpw(password.encode('utf-8'), password_hash.encode('utf-8')):
+            # Verify password (plain text for educational project)
+            if password != user['password_hash']:
                 QMessageBox.warning(
                     self, "Ошибка входа",
                     "Неверный логин или пароль"

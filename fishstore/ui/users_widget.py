@@ -10,8 +10,6 @@ from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QLabel,
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
 
-import bcrypt
-
 from dal.database import DatabasePool
 from dal.repositories import UserRepository
 from core.validators import validate_login, validate_password, validate_string_not_empty, validate_role
@@ -129,11 +127,8 @@ class UsersWidget(QWidget):
         if dialog.exec_() == QDialog.Accepted:
             user_data = dialog.get_user_data()
             try:
-                # Hash password
-                password_hash = bcrypt.hashpw(
-                    user_data.pop('password').encode('utf-8'),
-                    bcrypt.gensalt()
-                ).decode('utf-8')
+                # Store password in plain text (for educational project)
+                password_hash = user_data.pop('password')
                 
                 self.user_repo.create(password_hash=password_hash, **user_data)
                 QMessageBox.information(self, "Успех", "Пользователь успешно добавлен")
@@ -153,12 +148,9 @@ class UsersWidget(QWidget):
         if dialog.exec_() == QDialog.Accepted:
             user_data = dialog.get_user_data()
             try:
-                # Update password if changed
+                # Update password if changed (plain text for educational project)
                 if 'password' in user_data and user_data['password']:
-                    password_hash = bcrypt.hashpw(
-                        user_data.pop('password').encode('utf-8'),
-                        bcrypt.gensalt()
-                    ).decode('utf-8')
+                    password_hash = user_data.pop('password')
                     self.user_repo.update_password(user['user_id'], password_hash)
                 
                 self.user_repo.update(user['user_id'], **user_data)
