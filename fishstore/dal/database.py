@@ -48,7 +48,8 @@ class DatabasePool:
                 database=os.getenv('DB_NAME', 'fish_store'),
                 user=os.getenv('DB_USER', 'fishstore_app'),
                 password=os.getenv('DB_PASSWORD', ''),
-                cursor_factory=RealDictCursor
+                cursor_factory=RealDictCursor,
+                options='-c search_path=fish_store,public'
             )
             logger.info("Database pool initialized successfully")
         except Exception as e:
