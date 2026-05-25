@@ -1,6 +1,1 @@
-```
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-```
+Nothing should be ignored based on the provided file changes, as only a Python source file (`fishstore/dal/database.py`) was modified and no build artifacts, dependencies, or temporary files were detected in the changes.

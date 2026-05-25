@@ -146,8 +146,9 @@ class DatabasePool:
         """
         Execute INSERT/UPDATE/DELETE command.
         Returns number of affected rows.
+        Automatically commits the transaction.
         """
-        with self.get_connection() as conn:
+        with self.transaction() as conn:
             with conn.cursor() as cur:
                 cur.execute(query, params)
                 return cur.rowcount
@@ -156,8 +157,9 @@ class DatabasePool:
         """
         Execute INSERT/UPDATE with RETURNING clause.
         Returns the inserted/updated row.
+        Automatically commits the transaction.
         """
-        with self.get_connection() as conn:
+        with self.transaction() as conn:
             with conn.cursor() as cur:
                 cur.execute(query, params)
                 return cur.fetchone()
