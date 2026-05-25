@@ -4,6 +4,7 @@ Implements CRUD operations for the products table.
 """
 
 from typing import List, Dict, Any, Optional
+from datetime import datetime, date
 from dal.database import DatabasePool
 
 
