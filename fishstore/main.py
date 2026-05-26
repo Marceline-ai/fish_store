@@ -33,6 +33,15 @@ def main():
     app.setApplicationName("FishStore Manager")
     app.setOrganizationName("ИП Горлов Н.С.")
     
+    # Set application icon
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    icon_path = os.path.join(base_dir, 'resources', 'icon.png')
+    if os.path.exists(icon_path):
+        app.setWindowIcon(QIcon(icon_path))
+        logger.info(f"Application icon loaded from: {icon_path}")
+    else:
+        logger.warning(f"Application icon not found at: {icon_path}")
+    
     # Set application style
     app.setStyle('Fusion')
     

@@ -23,7 +23,8 @@ class LoginDialog(QDialog):
         self._user_data = None
         
         self.setWindowTitle("FishStore Manager - Вход в систему")
-        self.setFixedSize(400, 250)
+        self.setMinimumSize(500, 450)
+        self.resize(500, 450)
         self.setModal(True)
         
         self._init_ui()
@@ -31,64 +32,138 @@ class LoginDialog(QDialog):
     def _init_ui(self):
         """Initialize the user interface."""
         layout = QVBoxLayout()
-        layout.setSpacing(15)
-        layout.setContentsMargins(30, 30, 30, 30)
+        layout.setSpacing(20)
+        layout.setContentsMargins(60, 60, 60, 60)
         
         # Title
         title_label = QLabel("FishStore Manager")
-        title_label.setFont(QFont("Arial", 16, QFont.Bold))
+        title_font = QFont("Arial", 24, QFont.Bold)
+        title_label.setFont(title_font)
         title_label.setAlignment(Qt.AlignCenter)
+        title_label.setStyleSheet("color: #2c3e50; margin-bottom: 10px;")
         layout.addWidget(title_label)
         
-        subtitle_label = QLabel("Вход в систему")
-        subtitle_label.setFont(QFont("Arial", 10))
+        subtitle_label = QLabel("Система управления рыбным магазином")
+        subtitle_font = QFont("Arial", 12)
+        subtitle_label.setFont(subtitle_font)
         subtitle_label.setAlignment(Qt.AlignCenter)
+        subtitle_label.setStyleSheet("color: #7f8c8d;")
         layout.addWidget(subtitle_label)
+        
+        # Separator line
+        line = QFrame()
+        line.setFrameShape(QFrame.HLine)
+        line.setFrameShadow(QFrame.Sunken)
+        line.setStyleSheet("background-color: #bdc3c7;")
+        layout.addWidget(line)
         
         layout.addSpacing(20)
         
         # Login field
-        login_layout = QHBoxLayout()
         login_label = QLabel("Логин:")
-        login_label.setFixedWidth(80)
+        login_label.setFont(QFont("Arial", 14))
         self.login_edit = QLineEdit()
-        self.login_edit.setPlaceholderText("Введите логин")
+        self.login_edit.setPlaceholderText("Введите ваш логин")
         self.login_edit.setMaxLength(50)
-        login_layout.addWidget(login_label)
-        login_layout.addWidget(self.login_edit)
-        layout.addLayout(login_layout)
+        self.login_edit.setMinimumHeight(45)
+        self.login_edit.setFont(QFont("Arial", 14))
+        self.login_edit.setStyleSheet("""
+            QLineEdit {
+                border: 2px solid #bdc3c7;
+                border-radius: 8px;
+                padding: 5px 15px;
+                background-color: white;
+            }
+            QLineEdit:focus {
+                border: 2px solid #3498db;
+            }
+        """)
+        layout.addWidget(login_label)
+        layout.addWidget(self.login_edit)
         
         # Password field
-        password_layout = QHBoxLayout()
         password_label = QLabel("Пароль:")
-        password_label.setFixedWidth(80)
+        password_label.setFont(QFont("Arial", 14))
         self.password_edit = QLineEdit()
-        self.password_edit.setPlaceholderText("Введите пароль")
+        self.password_edit.setPlaceholderText("Введите ваш пароль")
         self.password_edit.setEchoMode(QLineEdit.Password)
-        password_layout.addWidget(password_label)
-        password_layout.addWidget(self.password_edit)
-        layout.addLayout(password_layout)
+        self.password_edit.setMinimumHeight(45)
+        self.password_edit.setFont(QFont("Arial", 14))
+        self.password_edit.setStyleSheet("""
+            QLineEdit {
+                border: 2px solid #bdc3c7;
+                border-radius: 8px;
+                padding: 5px 15px;
+                background-color: white;
+            }
+            QLineEdit:focus {
+                border: 2px solid #3498db;
+            }
+        """)
+        layout.addWidget(password_label)
+        layout.addWidget(self.password_edit)
         
         layout.addSpacing(20)
         
         # Buttons
         button_layout = QHBoxLayout()
-        button_layout.addStretch()
+        button_layout.setSpacing(15)
         
         self.login_button = QPushButton("Войти")
-        self.login_button.setFixedWidth(100)
+        self.login_button.setMinimumHeight(50)
+        self.login_button.setFont(QFont("Arial", 16, QFont.Bold))
+        self.login_button.setStyleSheet("""
+            QPushButton {
+                background-color: #3498db;
+                color: white;
+                border: none;
+                border-radius: 8px;
+            }
+            QPushButton:hover {
+                background-color: #2980b9;
+            }
+            QPushButton:pressed {
+                background-color: #21618c;
+            }
+            QPushButton:disabled {
+                background-color: #bdc3c7;
+                color: #7f8c8d;
+            }
+        """)
         self.login_button.clicked.connect(self._on_login)
         self.login_button.setDefault(True)
         button_layout.addWidget(self.login_button)
         
         self.cancel_button = QPushButton("Отмена")
-        self.cancel_button.setFixedWidth(100)
+        self.cancel_button.setMinimumHeight(50)
+        self.cancel_button.setFont(QFont("Arial", 14))
+        self.cancel_button.setStyleSheet("""
+            QPushButton {
+                background-color: #95a5a6;
+                color: white;
+                border: none;
+                border-radius: 8px;
+            }
+            QPushButton:hover {
+                background-color: #7f8c8d;
+            }
+            QPushButton:pressed {
+                background-color: #566573;
+            }
+        """)
         self.cancel_button.clicked.connect(self.reject)
         button_layout.addWidget(self.cancel_button)
         
         layout.addLayout(button_layout)
         
         self.setLayout(layout)
+        
+        # Apply styling to the whole window
+        self.setStyleSheet("""
+            QDialog {
+                background-color: #ecf0f1;
+            }
+        """)
         
         # Connect Enter key to login
         self.password_edit.returnPressed.connect(self._on_login)
