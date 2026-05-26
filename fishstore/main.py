@@ -7,6 +7,7 @@ import sys
 import os
 from PyQt5.QtWidgets import QApplication, QMessageBox
 from PyQt5.QtCore import Qt, QTranslator, QLocale
+from PyQt5.QtGui import QIcon
 from dotenv import load_dotenv
 
 # Load environment variables
