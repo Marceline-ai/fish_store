@@ -48,7 +48,8 @@ class DatabasePool:
                 database=os.getenv('DB_NAME', 'fish_store'),
                 user=os.getenv('DB_USER', 'fishstore_app'),
                 password=os.getenv('DB_PASSWORD', ''),
-                cursor_factory=RealDictCursor
+                cursor_factory=RealDictCursor,
+                options='-c search_path=fish_store,public'
             )
             logger.info("Database pool initialized successfully")
         except Exception as e:
@@ -146,8 +147,9 @@ class DatabasePool:
         """
         Execute INSERT/UPDATE/DELETE command.
         Returns number of affected rows.
+        Automatically commits the transaction.
         """
-        with self.get_connection() as conn:
+        with self.transaction() as conn:
             with conn.cursor() as cur:
                 cur.execute(query, params)
                 return cur.rowcount
@@ -156,8 +158,9 @@ class DatabasePool:
         """
         Execute INSERT/UPDATE with RETURNING clause.
         Returns the inserted/updated row.
+        Automatically commits the transaction.
         """
-        with self.get_connection() as conn:
+        with self.transaction() as conn:
             with conn.cursor() as cur:
                 cur.execute(query, params)
                 return cur.fetchone()
